@@ -43,6 +43,9 @@ function add_entry() {
                 book_title_input.value = "";
                 book_author_input.value = "";
                 category_input.value = "";
+                if (books_showing) {
+                    showRefreshButton(true);
+                }
             } else if (res.status === 500) {
                 showToast("Error", "An error has occured while adding the book!");
             }
@@ -70,14 +73,22 @@ function remove_entry() {
                 showToast("The book: " + book_name + " has been removed successfully");
                 book_title_input.value = ""
                 book_author_input.value = ""
+                if (books_showing) {
+                    showRefreshButton(true);
+                }
 
-            } else if (res.status === 500) {
+
+            } else if (res.status === 204) {
+                showToast("There is no book named " + book_title_input.value);
+            }
+            else if (res.status === 500) {
                 showToast("Error", "An error has occured while removing the book!");
             }
         })
     } else {
         showToast("Please enter all the fields");
     }
+
 
 
 }
@@ -134,4 +145,41 @@ function check_connection() {
             showToast("Not connected to the database!");
         }
     })
+}
+
+
+function showRefreshButton(a) {
+    let refresh_button = document.getElementById("refresh_button");
+    if (a) {
+        refresh_button.style.display = "inline";
+    }
+    else {
+        refresh_button.style.display = "none";
+    }
+}
+
+showRefreshButton(false);
+
+function refresh_books_available() {
+    let books_container = document.getElementById("books_show_table");
+    books_container.innerHTML = "";
+    show_books_button.innerHTML = "Show books";
+    books_showing = false;
+    showRefreshButton(false);
+}
+
+
+function borrow_book() {
+    let borrower_name = document.getElementById("borrower_name");
+    let borrower_book_name = document.getElementById("borrower_book_name");
+    let borrower_contact_no = document.getElementById("borrower_contact_no");
+    let val = document.querySelector('input[name="gender"]:checked').value;
+
+    if (borrower_name.value != "" && borrower_contact_no != "" && borrower_book_name != "" && val != "") {
+
+    } else {
+        showToast("Please fill all the required fields!");
+    }
+
+
 }

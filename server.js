@@ -17,7 +17,7 @@ app.use(cors());
 var con = mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
-    password: "password",
+    password: "root",
 });
 
 // checks if the connection is established
@@ -35,7 +35,7 @@ function create_database_if_not_exists(database_name) {
     return new Promise((resolve, reject) => {
         con.query(`create database if not exists ${database_name}`, (err, result) => {
             if (err) console.log(err);
-            if (result.warningCount === 0) {
+            else if (result.warningCount === 0) {
                 console.log("Database created successfully");
 
             } else {
@@ -47,7 +47,7 @@ function create_database_if_not_exists(database_name) {
             con = mysql.createConnection({
                 host: "127.0.0.1",
                 user: "root",
-                password: "password",
+                password: "root",
                 database: "library"
             })
             con.connect((err) => {
@@ -65,35 +65,36 @@ function create_database_if_not_exists(database_name) {
 
 
 // create the required tables if they won't exist in the library database
-async function create_table_if_not_exists(table_name) {
+async function create_table_if_not_exists(table_name, ...args) {
+    let sql = `CREATE TABLE ${table_name}(`;
 
-    con.query(`CREATE TABLE ${table_name}(id int auto_increment key, book_name varchar(20), author varchar(15), category varchar(10))`, (err, result) => {
+    for (i in args) {
+        sql += args[i];
+        sql += ",";
+
+    }
+    sql = sql.slice(0, -1);
+    sql += ")";
+
+
+
+    con.query(sql, (err, result) => {
 
         if (err) console.log(err.sqlMessage);
         else {
-            console.log("The books table is successfully created");
+            console.log(`The ${table_name} table is successfully created`);
         }
 
 
     })
 }
 
-async function create_table_if_not_exists(table_name) {
 
-    con.query(`CREATE TABLE ${table_name}(id int auto_increment key, book_name varchar(20), author varchar(15), category varchar(10))`, (err, result) => {
-
-        if (err) console.log(err.sqlMessage);
-        else {
-            console.log("The books table is successfully created");
-        }
-
-
-    })
-}
 
 async function create_tables() {
     await create_database_if_not_exists("library");
-    create_table_if_not_exists("books");
+    create_table_if_not_exists("books", "id int auto_increment key", "book_name varchar(20)", "author varchar(15)", "category varchar(10)");
+    create_table_if_not_exists("borrowers", "id int auto_increment key", "borrower_name varchar(20)", "borrower_contact_no bigint", "borrower_gender varchar(10)");
 
 }
 
@@ -119,7 +120,7 @@ app.post('/add_entry', (req, res) => {
         }
 
     })
-    res.status(201).send("Successfully added the book: "+ req.body.book_name);
+    res.status(201).send("Successfully added the book: " + req.body.book_name);
 })
 
 // remove a book from the 'books' table in the database 'library'
@@ -129,26 +130,33 @@ app.post('/remove_entry', async (req, res) => {
     // let sql = "delete from books where id = 1";
     con.query(sql, (err, result) => {
         if (err) {
-            res.status(500).send("Error removing a book: "+ err.sqlMessage);
+            res.status(500).send("Error removing a book: " + err.sqlMessage);
             return;
         }
-        res.status(201).send("Successfully removed the book: "+ req.body.book_name);
-        
+        else if (result.affectedRows === 0) {
+            res.status(204).send("There is no book named " + req.body.book_name);
+            return;
+        }
+        res.status(201).send("Successfully removed the book: " + req.body.book_name);
+
     })
 
 })
 
-app.get('/show_books', (req, res) =>{
+app.get('/show_books', (req, res) => {
     let sql = `select * from books`;
     con.query(sql, (err, result) => {
         if (err) {
-            res.status(500).send("An unexpected error occurred: "+ err.sqlMessage);
-        }else{
+            res.status(500).send("An unexpected error occurred: " + err.sqlMessage);
+        } else {
             res.status(200).send(result);
         }
     })
 })
 
+app.get('/add_borrower', (req, res) => {
+    
+})
 
 // hoisting the nodejs server locally over a port
 const PORT = 3000; // Choose any port you like

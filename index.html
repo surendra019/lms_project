@@ -15,7 +15,7 @@
         <h1>Library Management System</h1>
     </header>
     <main>
-        
+
         <section id="add-book">
             <h2>Add New Book</h2>
             <form id="book-form" class="form">
@@ -43,15 +43,30 @@
         <section id="borrow-book">
             <h2>Borrow Book</h2>
             <form id="borrow-form" class="form">
-                <label for="book-id">Book ID:</label>
-                <input type="text" id="book-id-borrow" required>
+                <label for="book-name">Book name:</label>
+                <input type="text" id="borrower_book_name" required>
                 <label for="borrower-name">Borrower Name:</label>
-                <input type="text" id="borrower-name" required>
-                <button type="button" class="submit_btns">Borrow </button>
+                <input type="text" id="borrower_name" required>
+                <label for="borrower-name">Contact No:</label>
+                <input type="number" id="borrower_contact_no" required>
+                <br>
+                <input type="radio" id="male" name="gender" value="Male">
+                <label id="gender" for="male">Male</label>
+                
+                <input type="radio" id="female" name="gender" value="Female">
+                
+                <label id="gender" for="female">Female</label>
+                <button type="button" class="submit_btns" onclick="borrow_book()">Borrow </button>
             </form>
         </section>
         <section id="book-list">
-            <h2>Books Available</h2>
+            <div class="books_available_head">
+                <h2>Books Available</h2>
+                <button style="background: none; border: none;" id="refresh_button"
+                    onclick="refresh_books_available()"><img src="refresh_icon.svg" alt="refresh" /></button>
+
+            </div>
+
             <div style="width: 18rem;">
                 <!-- <ul class="list-group list-group-flush" id="show_books_ul">
                      <li class="list-group-item">An item</li>

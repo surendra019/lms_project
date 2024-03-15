@@ -56,3 +56,8 @@ th, td{
 input[type="text"]{
   width: 200px; */
 /* } */
+
+.books_available_head{
+  display: flex;
+  /* flex-direction: column;  */
+}
