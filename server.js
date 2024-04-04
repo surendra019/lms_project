@@ -154,8 +154,17 @@ app.get('/show_books', (req, res) => {
     })
 })
 
-app.get('/add_borrower', (req, res) => {
-    
+app.post('/add_borrower', (req, res) => {
+    con.query(`select * from books where id = ${req.body["id"]}`, (err, result) => {
+        if (err) {
+            if(err.code === 'ER_BAD_FIELD_ERROR'){
+                res.status(500).send("The book is not present in the database!");
+            }
+        }else{
+            res.status(200).send("success");
+        }
+    })
+    // res.statusMessage(200).send()
 })
 
 // hoisting the nodejs server locally over a port

@@ -106,6 +106,7 @@ function show_books() {
             })
         }).then((res) => {
             books_container.innerHTML = `<tr>
+            <th>ID</th>
         <th>Book Name</th>
         <th>Author</th>
         <th>Category</th>
@@ -114,7 +115,11 @@ function show_books() {
                 let book_name = res[key]["book_name"];
                 let author_name = res[key]["author"];
                 let category = res[key]["category"];
+                let book_id = res[key]["id"];
                 let tr = document.createElement("tr");
+                var td4 = document.createElement("td");
+                td4.innerHTML = book_id;
+                tr.appendChild(td4);
                 var td = document.createElement("td");
                 td.innerHTML = book_name;
                 tr.appendChild(td);
@@ -124,6 +129,7 @@ function show_books() {
                 var td3 = document.createElement("td");
                 td3.innerHTML = category;
                 tr.appendChild(td3);
+                
                 books_container.appendChild(tr);
             }
             books_showing = true;
@@ -171,15 +177,46 @@ function refresh_books_available() {
 
 function borrow_book() {
     let borrower_name = document.getElementById("borrower_name");
-    let borrower_book_name = document.getElementById("borrower_book_name");
+    let borrower_book_id = document.getElementById("borrower_book_id");
     let borrower_contact_no = document.getElementById("borrower_contact_no");
     let val = document.querySelector('input[name="gender"]:checked').value;
 
-    if (borrower_name.value != "" && borrower_contact_no != "" && borrower_book_name != "" && val != "") {
-
+    if (borrower_name.value != "" && borrower_contact_no.value != "" && borrower_book_id.value != "" && val != "") {
+        fetch("http://localhost:3000/add_borrower", {
+            method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({
+                "borrower_name": borrower_name.value,
+                "borrower_book_id": borrower_book_id.value,
+                "borrower_contact_no": borrower_contact_no.value,
+                "gender": val
+            })
+        }).then((res) => {
+            return res.text();
+        }).then((res) =>{
+            showToast(res);
+        })
     } else {
         showToast("Please fill all the required fields!");
     }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
