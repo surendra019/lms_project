@@ -94,7 +94,7 @@ async function create_table_if_not_exists(table_name, ...args) {
 async function create_tables() {
     await create_database_if_not_exists("library");
     create_table_if_not_exists("books", "id int auto_increment key", "book_name varchar(20)", "author varchar(15)", "category varchar(10)");
-    create_table_if_not_exists("borrowers", "id int auto_increment key", "borrower_name varchar(20)", "borrower_contact_no bigint", "borrower_gender varchar(10)");
+    create_table_if_not_exists("borrowers", "id int auto_increment key", "borrowed_book_name varchar(30)", "borrowed_book_category varchar(20)", "borrowed_book_author varchar(20)", "borrower_name varchar(20)", "borrower_contact_no bigint", "borrower_gender varchar(10)", "borrowed_date date");
 
 }
 
@@ -154,14 +154,82 @@ app.get('/show_books', (req, res) => {
     })
 })
 
-app.post('/add_borrower', (req, res) => {
-    con.query(`select * from books where id = ${req.body["id"]}`, (err, result) => {
+app.get('/show_borrowers', (req, res) => {
+    let sql = `select * from borrowers`;
+    con.query(sql, (err, result) => {
         if (err) {
-            if(err.code === 'ER_BAD_FIELD_ERROR'){
+            res.status(500).send("An unexpected error occurred: " + err.sqlMessage);
+        } else {
+            res.status(200).send(result);
+        }
+    })
+})
+
+app.post('/add_borrower', (req, res) => {
+    console.log(req.body["borrower_book_id"])
+    con.query(`select * from books where id = ${req.body["borrower_book_id"]}`, (err, result) => {
+        if (err) {
+            if (err.code === 'ER_BAD_FIELD_ERROR') {
                 res.status(500).send("The book is not present in the database!");
             }
-        }else{
-            res.status(200).send("success");
+        } else {
+            con.query(`select * from books where id = ${req.body["borrower_book_id"]}`, (err, result) => {
+                if (err) {
+                    res.status(500).send("An unexpected error occurred: " + err.sqlMessage);
+                }
+                else {
+                    const book_data = result;
+   
+                    console.log(book_data.book_name);
+                    con.query(`delete from books where id = ${req.body["borrower_book_id"]}`, (err, result) => {
+
+                        if (err) {
+                            console.log(err);
+                            res.status(500).send("an error encountered!");
+                        } else {
+                            if (result.affectedRows !== 0) {
+                                con.query(`insert into borrowers(id, borrowed_book_name, borrowed_book_category, borrowed_book_author, borrower_name, borrower_contact_no, borrower_gender, borrowed_date) values(${req.body["borrower_book_id"]}, "${book_data[0].book_name}", "${book_data[0]["category"]}", "${book_data[0]["author"]}", "${req.body["borrower_name"]}", ${req.body["borrower_contact_no"]}, "${req.body["gender"]}", current_date())`, (err, result) => {
+                                    if (err) {
+                                        res.status(500).send("an error encountered!");
+                                        console.log(err);
+                                    } else {
+
+                                        res.status(200).send("borrower added successfully");
+                                    }
+                                })
+                            } else {
+                                res.status(404).send("The book is not present in the database!");
+                            }
+
+
+
+
+
+                        }
+                    })
+                }
+
+            })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     })
     // res.statusMessage(200).send()

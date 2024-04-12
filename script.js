@@ -1,6 +1,7 @@
 
 const toastContainer = document.getElementById('liveToastContainer');
 let books_showing = false;
+let borrowers_showing = false;
 
 function showToast(msg, head = "Information") {
     let code = `<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -143,6 +144,66 @@ function show_books() {
 
 }
 
+function show_borrowers() {
+    let borrowers_show_table = document.getElementById("borrowers_show_table");
+    let show_borrowers_button = document.getElementById("show_borrowers_button");
+    if (!borrowers_showing) {
+        fetch("http://localhost:3000/show_borrowers").then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+            return new Promise((resolve, reject) => {
+                reject("an Error has been encountered!");
+            })
+        }).then((res) => {
+            borrowers_show_table.innerHTML = `<tr>
+            <th>ID</th>
+            <th>Book Name</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Gender</th>
+        <th>Date</th>
+    </tr>`;
+            for (key in res) {
+                let borrower_name = res[key]["borrower_name"];
+                let borrowed_book_name = res[key]["borrowed_book_name"];
+                let contact = res[key]["borrower_contact_no"];
+                let gender = res[key]["borrower_gender"];
+                let id = res[key]["id"];
+                let date = res[key]["borrowed_date"];
+                let tr = document.createElement("tr");
+                var td4 = document.createElement("td");
+                td4.innerHTML = id;
+                tr.appendChild(td4);
+                var td5 = document.createElement("td");
+                td5.innerHTML = borrowed_book_name;
+                tr.appendChild(td5)
+                var td = document.createElement("td");
+                td.innerHTML = borrower_name;
+                tr.appendChild(td);
+                var td2 = document.createElement("td");
+                td2.innerHTML = contact;
+                tr.appendChild(td2);
+                var td3 = document.createElement("td");
+                td3.innerHTML = gender;
+                tr.appendChild(td3);
+                var td6 = document.createElement("td");
+                td6.innerHTML = date;
+                tr.appendChild(td6)
+                
+                borrowers_show_table.appendChild(tr);
+            }
+            borrowers_showing = true;
+            show_borrowers_button.innerHTML = "Hide borrowers";
+        })
+    } else {
+        borrowers_show_table.innerHTML = "";
+        show_borrowers_button.innerHTML = "Show borrowers";
+        borrowers_showing = false;
+    }
+
+}
+
 function check_connection() {
     fetch("http://localhost:3000/check_connection").then((res) => {
         if (res.status === 200) {
@@ -153,8 +214,18 @@ function check_connection() {
     })
 }
 
+function showRefreshButtonBorrowers(a){
+    let refresh_button = document.getElementById("refresh_button_borrowers");
+    if (a) {
+        refresh_button.style.display = "inline";
+    }
+    else {
+        refresh_button.style.display = "none";
+    }
+}
+showRefreshButtonBorrowers(false)
 
-function showRefreshButton(a) {
+function showRefreshButtonBooks(a) {
     let refresh_button = document.getElementById("refresh_button");
     if (a) {
         refresh_button.style.display = "inline";
@@ -164,14 +235,22 @@ function showRefreshButton(a) {
     }
 }
 
-showRefreshButton(false);
+showRefreshButtonBooks(false);
 
 function refresh_books_available() {
     let books_container = document.getElementById("books_show_table");
     books_container.innerHTML = "";
     show_books_button.innerHTML = "Show books";
     books_showing = false;
-    showRefreshButton(false);
+    showRefreshButtonBooks(false);
+}
+
+function refresh_borrower_list() {
+    let books_container = document.getElementById("borrowers_show_table");
+    books_container.innerHTML = "";
+    show_books_button.innerHTML = "Show borrowers";
+    borrowers_showing = false;
+    showRefreshButtonBorrowers(false);
 }
 
 

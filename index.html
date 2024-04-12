@@ -78,7 +78,28 @@
 
                 </table>
             </div>
+            
             <button id="show_books_button" class="submit_btns" onclick="show_books()">Show books</button>
+        </section>
+        <section id="borrower-list">
+            <div class="borrower_list_head">
+                <h2>Borrowers</h2>
+                <button style="background: none; border: none;" id="refresh_button_borrowers"
+                    onclick="refresh_borrower_list()"><img src="refresh_icon.svg" alt="refresh" /></button>
+
+            </div>
+            <div style="width: 18rem;">
+                <!-- <ul class="list-group list-group-flush" id="show_books_ul">
+                     <li class="list-group-item">An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li> -->
+                <!-- </ul> -->
+                <table id="borrowers_show_table" style="border-collapse: separate;">
+
+
+                </table>
+            </div>
+            <button id="show_borrowers_button" class="submit_btns" onclick="show_borrowers()">Show borrowers</button>
         </section>
     </main>
     <div class="toast-container position-fixed bottom-0 end-0 p-3" id="liveToastContainer">
