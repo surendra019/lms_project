@@ -60,31 +60,14 @@ function add_entry() {
 }
 
 function remove_entry() {
-    let book_title_input = document.getElementById('remove_title');
-    let book_author_input = document.getElementById('remove_author');
+    let id_input = document.getElementById("remove_book_id");
     if (book_title_input.value != "" && book_author_input.value != "") {
-        let book_name = book_title_input.value;
-        let author_name = book_author_input.value;
-        let data = {
-            "book_name": book_name,
-            "author_name": author_name
-        }
-        fetch("http://localhost:3000/remove_entry", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(res => {
-            if (res.status === 201) {
-                showToast("The book: " + book_name + " has been removed successfully");
-                book_title_input.value = ""
-                book_author_input.value = ""
-                if (books_showing) {
-                    showRefreshButton(true);
-                }
 
-
-            } else if (res.status === 204) {
-                showToast("There is no book named " + book_title_input.value);
-            }
-            else if (res.status === 500) {
-                showToast("Error", "An error has occured while removing the book!");
-            }
+        let id = id_input.value;
+        fetch("http://localhost:3000/remove_entry", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).then(res => {
+            return res.json();
+        }).then((res) => {
+            showToast(res.msg);
         })
     } else {
         showToast("Please enter all the fields");
@@ -130,7 +113,7 @@ function show_books() {
                 var td3 = document.createElement("td");
                 td3.innerHTML = category;
                 tr.appendChild(td3);
-                
+
                 books_container.appendChild(tr);
             }
             books_showing = true;
@@ -190,7 +173,7 @@ function show_borrowers() {
                 var td6 = document.createElement("td");
                 td6.innerHTML = date;
                 tr.appendChild(td6)
-                
+
                 borrowers_show_table.appendChild(tr);
             }
             borrowers_showing = true;
@@ -214,7 +197,7 @@ function check_connection() {
     })
 }
 
-function showRefreshButtonBorrowers(a){
+function showRefreshButtonBorrowers(a) {
     let refresh_button = document.getElementById("refresh_button_borrowers");
     if (a) {
         refresh_button.style.display = "inline";
@@ -262,7 +245,7 @@ function borrow_book() {
 
     if (borrower_name.value != "" && borrower_contact_no.value != "" && borrower_book_id.value != "" && val != "") {
         fetch("http://localhost:3000/add_borrower", {
-            method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({
+            method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
                 "borrower_name": borrower_name.value,
                 "borrower_book_id": borrower_book_id.value,
                 "borrower_contact_no": borrower_contact_no.value,
@@ -270,22 +253,29 @@ function borrow_book() {
             })
         }).then((res) => {
             return res.text();
-        }).then((res) =>{
+        }).then((res) => {
             showToast(res);
         })
     } else {
         showToast("Please fill all the required fields!");
     }
 
-
 }
 
+function remove_borrower() {
+    let id = document.getElementById("borrower_id").value;
 
+    fetch("http://localhost:3000/remove_borrower", {
+        method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
+            id
+        })
+    }).then((res) => {
+        return res.json()
 
-
-
-
-
+    }).then((res) => {
+        showToast(res.msg);
+    })
+}
 
 
 

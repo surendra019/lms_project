@@ -31,10 +31,8 @@
         <section id="remove-book">
             <h2>Remove Book</h2>
             <form id="remove-form" class="form">
-                <label for="title">Title:</label>
-                <input type="text" id="remove_title">
-                <label for="author">Author:</label>
-                <input type="text" id="remove_author">
+                <label for="remove_book_id">Book ID: </label>
+                <input type="number" id="remove_id"/>
                 <button type="button" onclick="remove_entry()" class="submit_btns">Remove book</button>
                 <br>
                 <div style="font-size: x-large; text-align: center;">OR</div>
@@ -57,6 +55,17 @@
 
                 <label id="gender" for="female">Female</label>
                 <button type="button" class="submit_btns" onclick="borrow_book()">Borrow </button>
+            </form>
+        </section>
+        <section id="remove-borrower">
+            <h2>Remove Borrower</h2>
+            <form id="remove-borrower-form" class="form">
+                <label for="borrower-id">Borrower id:</label>
+                <input type="number" id="borrower_id" required>
+       
+                <br>
+                <button type="button" class="submit_btns" onclick="remove_borrower()">Remove </button>
+
             </form>
         </section>
         <section id="book-list">

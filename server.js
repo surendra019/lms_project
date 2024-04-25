@@ -84,8 +84,6 @@ async function create_table_if_not_exists(table_name, ...args) {
         else {
             console.log(`The ${table_name} table is successfully created`);
         }
-
-
     })
 }
 
@@ -125,19 +123,19 @@ app.post('/add_entry', (req, res) => {
 
 // remove a book from the 'books' table in the database 'library'
 app.post('/remove_entry', async (req, res) => {
-    let sql = `delete from books where book_name = "${req.body.book_name}" and author = "${req.body.author_name}"`;
-
+    let sql = `delete from books where id = ${req.body.id}`;
+    console.log(sql);
     // let sql = "delete from books where id = 1";
     con.query(sql, (err, result) => {
         if (err) {
-            res.status(500).send("Error removing a book: " + err.sqlMessage);
+            res.status(500).json({msg: "Error removing a book: " + err.sqlMessage});
             return;
         }
         else if (result.affectedRows === 0) {
-            res.status(204).send("There is no book named " + req.body.book_name);
+            res.status(201).json({msg: "There is no book with id: " + req.body.id});
             return;
         }
-        res.status(201).send("Successfully removed the book: " + req.body.book_name);
+        res.status(201).json({msg: "Successfully removed the book!"});
 
     })
 
@@ -179,7 +177,7 @@ app.post('/add_borrower', (req, res) => {
                 }
                 else {
                     const book_data = result;
-   
+
                     console.log(book_data.book_name);
                     con.query(`delete from books where id = ${req.body["borrower_book_id"]}`, (err, result) => {
 
@@ -235,6 +233,34 @@ app.post('/add_borrower', (req, res) => {
     // res.statusMessage(200).send()
 })
 
+app.post('/remove_borrower', (req, res) => {
+
+    // console.log(req.body.id)
+    con.query(`select * from borrowers where id = ${req.body.id}`, (err, result) => {
+        if (err) res.status(500).json({ msg: err.sqlMessage });
+        else {
+            // console.log(req.body.id);
+            console.log(result.length);
+            if (result.length > 0) {
+                con.query(`delete from borrowers where id = ${result[0].id}`, (err, result) => {
+                    if (err) res.status(500).json({ msg: "an error encountered while removing the borrower" });
+                    else {
+                        res.status(201).json({ borrower_name: result.borrower_name, msg: "borrower successfully removed!" });
+                        return;
+                    }
+                })
+            } else {
+                // console.log(result.length);
+                res.status(201).json({ msg: "no borrower with this id" });
+                return;
+            }
+            // con.query(`select * from borrower`)
+
+        }
+    });
+
+    // res.status(201).send("success");
+})
 // hoisting the nodejs server locally over a port
 const PORT = 3000; // Choose any port you like
 app.listen(PORT, () => {
