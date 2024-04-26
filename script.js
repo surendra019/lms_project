@@ -256,7 +256,7 @@ function borrow_book() {
     let val = document.querySelector('input[name="gender"]:checked').value;
 
     if (borrower_name.value != "" && borrower_contact_no.value != "" && borrower_book_id.value != "" && val != "") {
-        fetch(https://lms-project-f1aw.onrender.com/add_borrower", {
+        fetch("https://lms-project-f1aw.onrender.com/add_borrower", {
             method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
                 "borrower_name": borrower_name.value,
                 "borrower_book_id": borrower_book_id.value,
