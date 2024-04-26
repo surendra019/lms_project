@@ -50,6 +50,8 @@ function add_entry() {
             } else if (res.status === 500) {
                 showToast("Error", "An error has occured while adding the book!");
             }
+        }).catch((err)=>{
+            showToast(`couldn't connect to the database! [MSG : ${err}]`);
         })
     } else {
 
@@ -60,14 +62,16 @@ function add_entry() {
 }
 
 function remove_entry() {
-    let id_input = document.getElementById("remove_book_id");
-    if (book_title_input.value != "" && book_author_input.value != "") {
+    let id_input = document.getElementById("remove_id");
+    if (id_input.value != "") {
 
         let id = id_input.value;
         fetch("http://localhost:3000/remove_entry", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).then(res => {
             return res.json();
         }).then((res) => {
             showToast(res.msg);
+        }).catch((err)=>{
+            showToast(`couldn't connect to the database! [MSG : ${err}]`);
         })
     } else {
         showToast("Please enter all the fields");
@@ -85,10 +89,12 @@ function show_books() {
             if (res.status === 200) {
                 return res.json();
             }
+            console.log(res.status)
             return new Promise((resolve, reject) => {
                 reject("an Error has been encountered!");
             })
         }).then((res) => {
+            
             books_container.innerHTML = `<tr>
             <th>ID</th>
         <th>Book Name</th>
@@ -118,6 +124,8 @@ function show_books() {
             }
             books_showing = true;
             show_books_button.innerHTML = "Hide books";
+        }).catch((err)=>{
+            showToast(`couldn't connect to the database! [MSG : ${err}]`);
         })
     } else {
         books_container.innerHTML = "";
@@ -178,6 +186,8 @@ function show_borrowers() {
             }
             borrowers_showing = true;
             show_borrowers_button.innerHTML = "Hide borrowers";
+        }).catch(err=>{
+            showToast(`couldn't connect to the database! [MSG : ${err}]`);
         })
     } else {
         borrowers_show_table.innerHTML = "";
@@ -194,6 +204,8 @@ function check_connection() {
         } else {
             showToast("Not connected to the database!");
         }
+    }).catch((err)=>{
+        showToast(`couldn't connect to the database! [MSG : ${err}]`);
     })
 }
 
@@ -255,6 +267,8 @@ function borrow_book() {
             return res.text();
         }).then((res) => {
             showToast(res);
+        }).catch(err=>{
+            showToast(`couldn't connect to the database! [MSG : ${err}]`);
         })
     } else {
         showToast("Please fill all the required fields!");
@@ -274,6 +288,8 @@ function remove_borrower() {
 
     }).then((res) => {
         showToast(res.msg);
+    }).catch((err)=>{
+        showToast(`couldn't connect to the database! [MSG : ${err}]`);
     })
 }
 

@@ -15,101 +15,104 @@
         <h1>Library Management System</h1>
     </header>
     <main>
+        <div class="card_container">
+            <section id="add-book" class="card">
+                <h2>Add New Book</h2>
+                <form id="book-form" class="form">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title">
+                    <label for="author">Author:</label>
+                    <input type="text" id="author">
+                    <label for="category">Category:</label>
+                    <input type="text" id="category">
+                    <button type="button" onclick="add_entry()" class="submit_btns">Add book</button>
+                </form>
+            </section>
+            <section id="remove-book" class="card">
+                <h2>Remove Book</h2>
+                <form id="remove-form" class="form">
+                    <label for="remove_book_id">Book ID: </label>
+                    <input type="number" id="remove_id"/>
+                    <button type="button" onclick="remove_entry()" class="submit_btns">Remove book</button>
+                    <br>
 
-        <section id="add-book">
-            <h2>Add New Book</h2>
-            <form id="book-form" class="form">
-                <label for="title">Title:</label>
-                <input type="text" id="title">
-                <label for="author">Author:</label>
-                <input type="text" id="author">
-                <label for="category">Category:</label>
-                <input type="text" id="category">
-                <button type="button" onclick="add_entry()" class="submit_btns">Add book</button>
-            </form>
-        </section>
-        <section id="remove-book">
-            <h2>Remove Book</h2>
-            <form id="remove-form" class="form">
-                <label for="remove_book_id">Book ID: </label>
-                <input type="number" id="remove_id"/>
-                <button type="button" onclick="remove_entry()" class="submit_btns">Remove book</button>
-                <br>
-                <div style="font-size: x-large; text-align: center;">OR</div>
-            </form>
-        </section>
-        <section id="borrow-book">
-            <h2>Borrow Book</h2>
-            <form id="borrow-form" class="form">
-                <label for="borrower-book-id">Book id:</label>
-                <input type="number" id="borrower_book_id" required>
-                <label for="borrower-name">Borrower Name:</label>
-                <input type="text" id="borrower_name" required>
-                <label for="borrower-name">Contact No:</label>
-                <input type="number" id="borrower_contact_no" required>
-                <br>
-                <input type="radio" id="male" name="gender" value="Male">
-                <label id="gender" for="male">Male</label>
-
-                <input type="radio" id="female" name="gender" value="Female">
-
-                <label id="gender" for="female">Female</label>
-                <button type="button" class="submit_btns" onclick="borrow_book()">Borrow </button>
-            </form>
-        </section>
-        <section id="remove-borrower">
-            <h2>Remove Borrower</h2>
-            <form id="remove-borrower-form" class="form">
-                <label for="borrower-id">Borrower id:</label>
-                <input type="number" id="borrower_id" required>
-       
-                <br>
-                <button type="button" class="submit_btns" onclick="remove_borrower()">Remove </button>
-
-            </form>
-        </section>
-        <section id="book-list">
-            <div class="books_available_head">
-                <h2>Books Available</h2>
-                <button style="background: none; border: none;" id="refresh_button"
-                    onclick="refresh_books_available()"><img src="refresh_icon.svg" alt="refresh" /></button>
-
-            </div>
-
-            <div style="width: 18rem;">
-                <!-- <ul class="list-group list-group-flush" id="show_books_ul">
-                     <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li> -->
-                <!-- </ul> -->
-                <table id="books_show_table" style="border-collapse: separate;">
-
-
-                </table>
-            </div>
-            
-            <button id="show_books_button" class="submit_btns" onclick="show_books()">Show books</button>
-        </section>
-        <section id="borrower-list">
-            <div class="borrower_list_head">
-                <h2>Borrowers</h2>
-                <button style="background: none; border: none;" id="refresh_button_borrowers"
-                    onclick="refresh_borrower_list()"><img src="refresh_icon.svg" alt="refresh" /></button>
-
-            </div>
-            <div style="width: 18rem;">
-                <!-- <ul class="list-group list-group-flush" id="show_books_ul">
-                     <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li> -->
-                <!-- </ul> -->
-                <table id="borrowers_show_table" style="border-collapse: separate;">
-
-
-                </table>
-            </div>
-            <button id="show_borrowers_button" class="submit_btns" onclick="show_borrowers()">Show borrowers</button>
-        </section>
+                </form>
+            </section>
+            <section id="borrow-book" class="card">
+                <h2>Borrow Book</h2>
+                <form id="borrow-form" class="form">
+                    <label for="borrower-book-id">Book id:</label>
+                    <input type="number" id="borrower_book_id" required>
+                    <label for="borrower-name">Borrower Name:</label>
+                    <input type="text" id="borrower_name" required>
+                    <label for="borrower-name">Contact No:</label>
+                    <input type="number" id="borrower_contact_no" required>
+                    <br>
+                    <div class="radio_group"><label id="gender" for="male">Male</label><input type="radio" id="male" name="gender" value="Male"></div>
+                        
+                    
+                    <div class="radio_group"> <label id="gender" for="female">Female</label><input type="radio" id="female" name="gender" value="Female"></div>
+                    
+    
+                       
+                    <button type="button" class="submit_btns" onclick="borrow_book()">Borrow </button>
+                </form>
+            </section>
+            <section id="remove-borrower" class="card">
+                <h2>Remove Borrower</h2>
+                <form id="remove-borrower-form" class="form">
+                    <label for="borrower-id">Borrower id:</label>
+                    <input type="number" id="borrower_id" required>
+           
+                    <br>
+                    <button type="button" class="submit_btns" onclick="remove_borrower()">Remove </button>
+    
+                </form>
+            </section>
+            <section id="book-list" class="card">
+                <div class="books_available_head">
+                    <h2>Books Available</h2>
+                    <button style="background: none; border: none;" id="refresh_button"
+                        onclick="refresh_books_available()"><img src="refresh_icon.svg" alt="refresh" /></button>
+    
+                </div>
+    
+                <div style="width: 18rem;">
+                    <!-- <ul class="list-group list-group-flush" id="show_books_ul">
+                         <li class="list-group-item">An item</li>
+                        <li class="list-group-item">A second item</li>
+                        <li class="list-group-item">A third item</li> -->
+                    <!-- </ul> -->
+                    <table id="books_show_table" style="border-collapse: separate;">
+    
+    
+                    </table>
+                </div>
+                
+                <button id="show_books_button" class="submit_btns" onclick="show_books()">Show books</button>
+            </section>
+            <section id="borrower-list" class="card">
+                <div class="borrower_list_head">
+                    <h2>Borrowers</h2>
+                    <button style="background: none; border: none;" id="refresh_button_borrowers"
+                        onclick="refresh_borrower_list()"><img src="refresh_icon.svg" alt="refresh" /></button>
+    
+                </div>
+                <div style="width: 18rem;">
+                    <!-- <ul class="list-group list-group-flush" id="show_books_ul">
+                         <li class="list-group-item">An item</li>
+                        <li class="list-group-item">A second item</li>
+                        <li class="list-group-item">A third item</li> -->
+                    <!-- </ul> -->
+                    <table id="borrowers_show_table" style="border-collapse: separate;">
+    
+    
+                    </table>
+                </div>
+                <button id="show_borrowers_button" class="submit_btns" onclick="show_borrowers()">Show borrowers</button>
+            </section>
+        </div>
+        
     </main>
     <div class="toast-container position-fixed bottom-0 end-0 p-3" id="liveToastContainer">
 

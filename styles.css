@@ -14,6 +14,7 @@ header {
 
 main {
   padding: 20px;
+  
 }
 
 section {
@@ -41,23 +42,68 @@ li {
 th, td{
   padding: 5px 10px;
 }
-/* .form{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.submit_btns{
-  width: 100px;
-  margin: 0px auto;
-}
-
-
-input[type="text"]{
-  width: 200px; */
-/* } */
 
 .books_available_head{
   display: flex;
   /* flex-direction: column;  */
+}
+
+.submit_btns{
+  border: 1px solid black;
+  border-radius: 5px;
+  max-width: 150px;
+}
+
+.card_container{
+  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+  margin: auto;
+}
+
+.card{
+  display: flex;
+  /* flex-direction: column; */
+}
+
+.card form{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.card form *{
+  margin-top: 8px;
+}
+
+.card form input{
+  width: 50%;
+}
+
+
+.radio_group *{
+  width: 50%;
+
+}
+.radio_group{
+  display: flex;
+}
+
+.radio_group label{
+  line-height: 100%;
+  /* text-align: center; */
+}
+
+.card form input{
+  border-radius: 5px;
+}
+@media only screen and (max-width: 1000px){
+  .card_container{
+    grid-template-columns: 1fr;
+  }
+  .submit_btns{
+    max-width: 120px;
+  }
 }
