@@ -38,7 +38,7 @@ function add_entry() {
             "author_name": author_name,
             "category": category
         }
-        fetch("http://localhost:3000/add_entry", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(res => {
+        fetch("https://lms-project-f1aw.onrender.com/add_entry", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(res => {
             if (res.status === 201) {
                 showToast("The book: " + book_name + " has been addeed successfully");
                 book_title_input.value = "";
@@ -66,7 +66,7 @@ function remove_entry() {
     if (id_input.value != "") {
 
         let id = id_input.value;
-        fetch("http://localhost:3000/remove_entry", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).then(res => {
+        fetch("https://lms-project-f1aw.onrender.com/remove_entry", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).then(res => {
             return res.json();
         }).then((res) => {
             showToast(res.msg);
@@ -85,7 +85,7 @@ function show_books() {
     let books_container = document.getElementById("books_show_table");
     let show_books_button = document.getElementById("show_books_button");
     if (!books_showing) {
-        fetch("http://localhost:3000/show_books").then(res => {
+        fetch("https://lms-project-f1aw.onrender.com/show_books").then(res => {
             if (res.status === 200) {
                 return res.json();
             }
@@ -139,7 +139,7 @@ function show_borrowers() {
     let borrowers_show_table = document.getElementById("borrowers_show_table");
     let show_borrowers_button = document.getElementById("show_borrowers_button");
     if (!borrowers_showing) {
-        fetch("http://localhost:3000/show_borrowers").then(res => {
+        fetch("https://lms-project-f1aw.onrender.com/show_borrowers").then(res => {
             if (res.status === 200) {
                 return res.json();
             }
@@ -198,7 +198,7 @@ function show_borrowers() {
 }
 
 function check_connection() {
-    fetch("http://localhost:3000/check_connection").then((res) => {
+    fetch("https://lms-project-f1aw.onrender.com/check_connection").then((res) => {
         if (res.status === 200) {
             showToast("Connected to the database!");
         } else {
@@ -256,7 +256,7 @@ function borrow_book() {
     let val = document.querySelector('input[name="gender"]:checked').value;
 
     if (borrower_name.value != "" && borrower_contact_no.value != "" && borrower_book_id.value != "" && val != "") {
-        fetch("http://localhost:3000/add_borrower", {
+        fetch(https://lms-project-f1aw.onrender.com/add_borrower", {
             method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
                 "borrower_name": borrower_name.value,
                 "borrower_book_id": borrower_book_id.value,
@@ -279,7 +279,7 @@ function borrow_book() {
 function remove_borrower() {
     let id = document.getElementById("borrower_id").value;
 
-    fetch("http://localhost:3000/remove_borrower", {
+    fetch("https://lms-project-f1aw.onrender.com/remove_borrower", {
         method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
             id
         })
