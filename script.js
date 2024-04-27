@@ -90,9 +90,9 @@ function show_books() {
                 return res.json();
             }
             console.log(res.status)
-            return new Promise((resolve, reject) => {
-                reject("an Error has been encountered!");
-            })
+            // return new Promise((resolve, reject) => {
+            //     reject("an Error has been encountered!");
+            // })
         }).then((res) => {
             
             books_container.innerHTML = `<tr>
