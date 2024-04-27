@@ -44,9 +44,7 @@ function add_entry() {
                 book_title_input.value = "";
                 book_author_input.value = "";
                 category_input.value = "";
-                if (books_showing) {
-                    showRefreshButton(true);
-                }
+            
             } else if (res.status === 500) {
                 showToast("Error", "An error has occured while adding the book!");
             }
