@@ -147,6 +147,7 @@ app.get('/show_books', (req, res) => {
     con.query(sql, (err, result) => {
         if (err) {
             res.status(500).send("An unexpected error occurred: " + err);
+            console.log(err)
         } else {
             res.status(200).send(result);
         }
