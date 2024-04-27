@@ -106,4 +106,7 @@ th, td{
   .submit_btns{
     max-width: 120px;
   }
+  .card_container{
+    width: 90%;
+  }
 }
