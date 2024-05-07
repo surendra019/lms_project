@@ -46,9 +46,9 @@ function create_database_if_not_exists(database_name) {
 
             database = 'library';
             con = mysql.createConnection({
-                host: "127.0.0.1",
-                user: "root",
-                password: "root",
+                host: "sql6.freesqldatabase.com",
+                user: "sql6702090",
+                password: "mMD6CXG9y9",
                 database: "library"
             })
             con.connect((err) => {
