@@ -94,7 +94,7 @@ async function create_table_if_not_exists(table_name, ...args) {
 
 
 async function create_tables() {
-    await create_database_if_not_exists("library");
+    // await create_database_if_not_exists("library");
     create_table_if_not_exists("books", "id int auto_increment key", "book_name varchar(20)", "author varchar(15)", "category varchar(10)");
     create_table_if_not_exists("borrowers", "id int auto_increment key", "borrowed_book_name varchar(30)", "borrowed_book_category varchar(20)", "borrowed_book_author varchar(20)", "borrower_name varchar(20)", "borrower_contact_no bigint", "borrower_gender varchar(10)", "borrowed_date date");
 
