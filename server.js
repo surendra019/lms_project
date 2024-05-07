@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //creating a connection to the server
-var con = mysql.createConnection({
+var con = mysql.createPool({
     host: "lms-project-4654.7s5.aws-ap-south-1.cockroachlabs.cloud",
     user: "surendra",
     password: "AhzAidtnoeUyc9cAeuBaRQ",
