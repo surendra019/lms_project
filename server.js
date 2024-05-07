@@ -86,7 +86,7 @@ async function create_table_if_not_exists(table_name, ...args) {
         else {
             console.log(`The ${table_name} table is successfully created`);
         }
-    con.release();
+    // con.release();
 
     })
 }
@@ -120,7 +120,7 @@ app.post('/add_entry', (req, res) => {
             res.status(500).send("Error adding a book : " + err.sqlMessage);
             return;
         }
-        con.release();
+        // con.release();
 
     })
     
@@ -142,7 +142,7 @@ app.post('/remove_entry', async (req, res) => {
             return;
         }
         res.status(201).json({msg: "Successfully removed the book!"});
-        con.release();
+        // con.release();
 
     })
 
@@ -157,7 +157,7 @@ app.get('/show_books', (req, res) => {
         } else {
             res.status(200).send(result);
         }
-        con.release();
+        // con.release();
 
     })
 })
@@ -170,7 +170,7 @@ app.get('/show_borrowers', (req, res) => {
         } else {
             res.status(200).send(result);
         }
-        con.release();
+        // con.release();
 
     })
 })
@@ -178,7 +178,7 @@ app.get('/show_borrowers', (req, res) => {
 app.post('/add_borrower', (req, res) => {
     console.log(req.body["borrower_book_id"])
     con.query(`select * from books where id = ${req.body["borrower_book_id"]}`, (err, result) => {
-        con.release();
+        // con.release();
         if (err) {
             if (err.code === 'ER_BAD_FIELD_ERROR') {
                 res.status(500).send("The book is not present in the database!");
@@ -188,7 +188,7 @@ app.post('/add_borrower', (req, res) => {
 
         } else {
             con.query(`select * from books where id = ${req.body["borrower_book_id"]}`, (err, result) => {
-                con.release();
+                // con.release();
                 if (err) {
                     res.status(500).send("An unexpected error occurred: " + err.sqlMessage);
                 }
