@@ -15,9 +15,9 @@ app.use(cors());
 
 //creating a connection to the server
 var con = mysql.createConnection({
-    host: "sql6.freesqldatabase.com",
-    user: "sql6702090",
-    password: "mMD6CXG9y9",
+    host: "postgresql://surendra:AhzAidtnoeUyc9cAeuBaRQ@lms-project-4654.7s5.aws-ap-south-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+    user: "surendra",
+    password: "AhzAidtnoeUyc9cAeuBaRQ",
     port: 3306
 });
 
