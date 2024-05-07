@@ -58,7 +58,7 @@ function create_database_if_not_exists(database_name) {
                     resolve();
                 }
             })
-            con.release();
+            // con.release();
 
         });
     })
